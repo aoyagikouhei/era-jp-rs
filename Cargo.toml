@@ -1,0 +1,14 @@
+[package]
+name = "era-jp"
+version = "0.1.0"
+authors = ["aoyagikouhei <aoyagi.kouhei@gmail.com>"]
+license = "MIT OR Apache-2.0"
+description = "Japanese Era Library"
+repository = "https://github.com/aoyagikouhei/era-jp-rs"
+keywords = ["xlsx", "ods", "spreadsheet"]
+categories = ["encoding"]
+readme = "Readme.md"
+documentation = "https://docs.rs/era_jp"
+
+[dependencies]
+chrono = "*"
