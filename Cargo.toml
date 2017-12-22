@@ -11,4 +11,4 @@ readme = "Readme.md"
 documentation = "https://docs.rs/era_jp"
 
 [dependencies]
-chrono = "*"
+chrono = "~0.4.0"
