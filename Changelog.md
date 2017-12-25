@@ -1,3 +1,8 @@
+## 0.1.2 (2017/12/26)
+- add get_year_from_era
+- fix typos
+- fix document url
+
 ## 0.1.1 (2017/12/25)
 - support local timezone
 

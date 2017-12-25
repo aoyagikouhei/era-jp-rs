@@ -1,6 +1,6 @@
 [package]
 name = "era-jp"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["aoyagikouhei <aoyagi.kouhei@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "Japanese Era Library"
@@ -8,7 +8,7 @@ repository = "https://github.com/aoyagikouhei/era-jp-rs"
 keywords = ["time"]
 categories = ["encoding"]
 readme = "Readme.md"
-documentation = "https://docs.rs/era_jp"
+documentation = "https://docs.rs/era-jp"
 
 [dependencies]
 chrono = "~0.4.0"

@@ -2,4 +2,4 @@
 
 Japanese Era Library
 
-[Documentation](https://docs.rs/era_jp)
+[Documentation](https://docs.rs/era-jp)

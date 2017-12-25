@@ -8,12 +8,12 @@ pub fn meiji() -> DateTime<Utc> {
 }
 
 /// Start Tasho Era
-pub fn taisyou() -> DateTime<Utc> {
+pub fn taisyo() -> DateTime<Utc> {
     Utc.ymd(1912, 7, 29).and_hms(15, 0, 0)
 }
 
 /// Start Showa Era
-pub fn shouwa() -> DateTime<Utc> {
+pub fn showa() -> DateTime<Utc> {
     Utc.ymd(1926, 12, 24).and_hms(15, 0, 0)
 }
 
@@ -27,9 +27,9 @@ pub fn get_era<T: TimeZone>(dt: &DateTime<T>) -> Era {
     let dt = dt.with_timezone(&Utc);
     if dt < meiji() {
         Era::PreMeiji
-    } else if dt < taisyou() {
+    } else if dt < taisyo() {
         Era::Meiji
-    } else if dt < shouwa() {
+    } else if dt < showa() {
         Era::Taisho
     } else if dt < heisei() {
         Era::Showa
@@ -39,15 +39,16 @@ pub fn get_era<T: TimeZone>(dt: &DateTime<T>) -> Era {
 }
 
 /// get era year
-pub fn get_year<T: TimeZone>(dt: &DateTime<T>) -> i32 {
+pub fn get_year<T: TimeZone>(dt: &DateTime<T>) -> i64 {
     let year = dt.year();
-    match get_era(dt) {
+    let res = match get_era(dt) {
         Era::PreMeiji => year,
         Era::Meiji => year - meiji().year() + 1,
-        Era::Taisho => year - taisyou().year() + 1,
-        Era::Showa => year - shouwa().year() + 1,
+        Era::Taisho => year - taisyo().year() + 1,
+        Era::Showa => year - showa().year() + 1,
         Era::Heisei => year - heisei().year() + 1,
-    }
+    };
+    res as i64
 }
 
 /// get full name
@@ -81,6 +82,18 @@ pub fn get_abbreviation_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
         Era::Showa => "S",
         Era::Heisei => "H",
     }
+}
+
+/// get year from era
+pub fn get_year_from_era(year: i64, era: Era) -> i64 {
+    let base = match era {
+        Era::PreMeiji => 1,
+        Era::Meiji => meiji().year(),
+        Era::Taisho => taisyo().year(),
+        Era::Showa => showa().year(),
+        Era::Heisei => heisei().year(),
+    };
+    ((base - 1) as i64) + year
 }
 
 #[derive(Debug, Clone, PartialEq)]
