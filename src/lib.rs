@@ -23,14 +23,15 @@ pub fn heisei() -> DateTime<Utc> {
 }
 
 /// get era from datetime
-pub fn get_era(dt: &DateTime<Utc>) -> Era {
-    if dt < &meiji() {
+pub fn get_era<T: TimeZone>(dt: &DateTime<T>) -> Era {
+    let dt = dt.with_timezone(&Utc);
+    if dt < meiji() {
         Era::PreMeiji
-    } else if dt < &taisyou() {
+    } else if dt < taisyou() {
         Era::Meiji
-    } else if dt < &shouwa() {
+    } else if dt < shouwa() {
         Era::Taisho
-    } else if dt < &heisei() {
+    } else if dt < heisei() {
         Era::Showa
     } else {
         Era::Heisei
@@ -38,7 +39,7 @@ pub fn get_era(dt: &DateTime<Utc>) -> Era {
 }
 
 /// get era year
-pub fn get_year(dt: &DateTime<Utc>) -> i32 {
+pub fn get_year<T: TimeZone>(dt: &DateTime<T>) -> i32 {
     let year = dt.year();
     match get_era(dt) {
         Era::PreMeiji => year,
@@ -50,7 +51,7 @@ pub fn get_year(dt: &DateTime<Utc>) -> i32 {
 }
 
 /// get full name
-pub fn get_name(dt: &DateTime<Utc>) -> &str {
+pub fn get_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
     match get_era(dt) {
         Era::PreMeiji => "西暦",
         Era::Meiji => "明治",
@@ -61,7 +62,7 @@ pub fn get_name(dt: &DateTime<Utc>) -> &str {
 }
 
 /// get short name
-pub fn get_short_name(dt: &DateTime<Utc>) -> &str {
+pub fn get_short_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
     match get_era(dt) {
         Era::PreMeiji => "西暦",
         Era::Meiji => "明",
@@ -72,7 +73,7 @@ pub fn get_short_name(dt: &DateTime<Utc>) -> &str {
 }
 
 /// get abbrevivation name
-pub fn get_abbreviation_name(dt: &DateTime<Utc>) -> &str {
+pub fn get_abbreviation_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
     match get_era(dt) {
         Era::PreMeiji => "西暦",
         Era::Meiji => "M",

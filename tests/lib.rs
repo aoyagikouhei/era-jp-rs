@@ -55,4 +55,11 @@ fn it_works() {
     assert_eq!(era_jp::get_name(&dt), "平成");
     assert_eq!(era_jp::get_short_name(&dt), "平");
     assert_eq!(era_jp::get_abbreviation_name(&dt), "H");
+
+    let dt = Local.ymd(1989, 1, 6).and_hms(15, 0, 0);
+    assert_eq!(era_jp::get_era(&dt), Era::Showa);
+    assert_eq!(era_jp::get_year(&dt), 64);
+    assert_eq!(era_jp::get_name(&dt), "昭和");
+    assert_eq!(era_jp::get_short_name(&dt), "昭");
+    assert_eq!(era_jp::get_abbreviation_name(&dt), "S");
 }
