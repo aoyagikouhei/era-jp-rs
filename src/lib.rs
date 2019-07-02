@@ -1,5 +1,5 @@
 //! Japanese Era Library
-extern crate chrono;
+
 use chrono::prelude::*;
 
 /// Start Meiji Era
@@ -22,6 +22,11 @@ pub fn heisei() -> DateTime<Utc> {
     Utc.ymd(1989, 1, 6).and_hms(15, 0, 0)
 }
 
+/// Start Reiwa Era
+pub fn reiwa() -> DateTime<Utc> {
+    Utc.ymd(2019, 4, 30).and_hms(15, 0, 0)
+}
+
 /// get era from datetime
 pub fn get_era<T: TimeZone>(dt: &DateTime<T>) -> Era {
     let dt = dt.with_timezone(&Utc);
@@ -33,8 +38,10 @@ pub fn get_era<T: TimeZone>(dt: &DateTime<T>) -> Era {
         Era::Taisho
     } else if dt < heisei() {
         Era::Showa
-    } else {
+    } else if dt < reiwa() {
         Era::Heisei
+    } else {
+        Era::Reiwa
     }
 }
 
@@ -47,6 +54,7 @@ pub fn get_year<T: TimeZone>(dt: &DateTime<T>) -> i64 {
         Era::Taisho => year - taisyo().year() + 1,
         Era::Showa => year - showa().year() + 1,
         Era::Heisei => year - heisei().year() + 1,
+        Era::Reiwa => year - reiwa().year() + 1,
     };
     res as i64
 }
@@ -59,6 +67,7 @@ pub fn get_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
         Era::Taisho => "大正",
         Era::Showa => "昭和",
         Era::Heisei => "平成",
+        Era::Reiwa => "令和",
     }
 }
 
@@ -70,6 +79,19 @@ pub fn get_short_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
         Era::Taisho => "大",
         Era::Showa => "昭",
         Era::Heisei => "平",
+        Era::Reiwa => "令",
+    }
+}
+
+/// get ligature
+pub fn get_ligature<T: TimeZone>(dt: &DateTime<T>) -> &str {
+    match get_era(dt) {
+        Era::PreMeiji => "西暦",
+        Era::Meiji => "\u{337E}",
+        Era::Taisho => "\u{337D}",
+        Era::Showa => "\u{337C}",
+        Era::Heisei => "\u{337B}",
+        Era::Reiwa => "\u{32FF}",
     }
 }
 
@@ -81,6 +103,7 @@ pub fn get_abbreviation_name<T: TimeZone>(dt: &DateTime<T>) -> &str {
         Era::Taisho => "T",
         Era::Showa => "S",
         Era::Heisei => "H",
+        Era::Reiwa => "R",
     }
 }
 
@@ -92,6 +115,7 @@ pub fn get_year_from_era(year: i64, era: Era) -> i64 {
         Era::Taisho => taisyo().year(),
         Era::Showa => showa().year(),
         Era::Heisei => heisei().year(),
+        Era::Reiwa => reiwa().year(),
     };
     ((base - 1) as i64) + year
 }
@@ -102,5 +126,6 @@ pub enum Era {
     Meiji,
     Taisho,
     Showa,
-    Heisei
+    Heisei,
+    Reiwa,
 }
